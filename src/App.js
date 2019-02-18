@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Jumbotron, Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
+import { Jumbotron, Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink, Spinner } from 'reactstrap';
 import './App.css';
 import Movie from './Movie.js';
 
@@ -13,6 +13,16 @@ class App extends Component {
 
   state = {
 
+  }
+
+  // 생성
+  constructor(props) {
+    super(props);
+
+    this.toggleNavbar = this.toggleNavbar.bind(this);
+    this.state = {
+      collapsed: true
+    };
   }
 
   componentWillMount(){
@@ -57,15 +67,9 @@ class App extends Component {
      .catch(err => console.log(err))
   }
 
-  constructor(props) {
-    super(props);
+  
 
-    this.toggleNavbar = this.toggleNavbar.bind(this);
-    this.state = {
-      collapsed: true
-    };
-  }
-
+  // Toggle 이벤트
   toggleNavbar() {
     this.setState({
       collapsed: !this.state.collapsed
@@ -78,7 +82,7 @@ class App extends Component {
     return (
       <div>
         <Navbar color="faded" light>
-          <NavbarBrand href="/" className="mr-auto"><h2><img src="./favicon.ico"></img> Movie App</h2></NavbarBrand>
+          <NavbarBrand href="/http://MATA0406.github.io/server_side_react" className="mr-auto"><h2><img src="./favicon.ico"></img> Movie App</h2></NavbarBrand>
           <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
           <Collapse isOpen={!this.state.collapsed} navbar>
             <Nav navbar>
@@ -93,7 +97,7 @@ class App extends Component {
         </Navbar>
         <Jumbotron>
           <div className={movies ? "App" : "App--loading"}>
-            {this.state.movies ? this._renderMovies() : <h1>Loading..</h1>}
+            {this.state.movies ? this._renderMovies() : <h1>Loading... </h1>}<Spinner color="danger" />
           </div>
         </Jumbotron>
       </div>
