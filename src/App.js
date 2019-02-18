@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Jumbotron, Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
 import './App.css';
 import Movie from './Movie.js';
 
@@ -32,6 +33,8 @@ class App extends Component {
         key={movie.id}
         genres={movie.genres}
         synopsis={movie.synopsis}
+        torrents={movie.torrents}
+        date_uploaded={movie.date_uploaded}
       />
     })
 
@@ -54,12 +57,45 @@ class App extends Component {
      .catch(err => console.log(err))
   }
 
+  constructor(props) {
+    super(props);
+
+    this.toggleNavbar = this.toggleNavbar.bind(this);
+    this.state = {
+      collapsed: true
+    };
+  }
+
+  toggleNavbar() {
+    this.setState({
+      collapsed: !this.state.collapsed
+    });
+  }
+
   render() {
     const { movies } = this.state;
 
     return (
-      <div className={movies ? "App" : "App--loading"}>
-        {this.state.movies ? this._renderMovies() : 'Loading'}
+      <div>
+        <Navbar color="faded" light>
+          <NavbarBrand href="/" className="mr-auto"><h2><img src="./favicon.ico"></img> Movie App</h2></NavbarBrand>
+          <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
+          <Collapse isOpen={!this.state.collapsed} navbar>
+            <Nav navbar>
+              <NavItem>
+                <NavLink href="https://academy.nomadcoders.co/courses/category/KR">Nomad Coders</NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink href="https://github.com/MATA0406/server_side_react">GitHub</NavLink>
+              </NavItem>
+            </Nav>
+          </Collapse>
+        </Navbar>
+        <Jumbotron>
+          <div className={movies ? "App" : "App--loading"}>
+            {this.state.movies ? this._renderMovies() : <h1>Loading..</h1>}
+          </div>
+        </Jumbotron>
       </div>
     )
   }
