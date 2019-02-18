@@ -1,3 +1,6 @@
+# React Movie-App
+URL: https://mata0406.github.io/server_side_react/
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
