@@ -6,7 +6,7 @@ import './Movie.css';
 // Class가 아닌 Dumb function
 function Movie({title, poster, genres, synopsis, torrents, date_uploaded}){
     return(
-        <Col sm="3">
+        <Col md="3">
             <Card>
                 <div className="Movie">
                     <div className="Movie_Columns">

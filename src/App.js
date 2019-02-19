@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Jumbotron, Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink, Spinner } from 'reactstrap';
+import { Jumbotron, Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink, Spinner, Col } from 'reactstrap';
 import './App.css';
 import Movie from './Movie.js';
+import Pagination from './Pagination';
 
 
 
@@ -32,6 +33,7 @@ class App extends Component {
   componentDidMount(){
     console.log('did mount');
 
+    // 비동기 통신으로 Movie List 호출
     this._getMovies();
   }
 
@@ -61,7 +63,7 @@ class App extends Component {
 
   _callApi = () => {
      // AJAX
-     return fetch('https://yts.am/api/v2/list_movies.json?sort_by=download_count')
+     return fetch('https://yts.am/api/v2/list_movies.json?sort_by=download_count&&limit=50')
      .then(response => response.json())
      .then(json => json.data.movies) // 화살표 fucntion은 return을 작성할 필요가 없다.(자동!)
      .catch(err => console.log(err))
@@ -81,25 +83,29 @@ class App extends Component {
 
     return (
       <div>
-        <Navbar color="faded" light>
-          <NavbarBrand href="/http://MATA0406.github.io/server_side_react" className="mr-auto"><h2><img src="./favicon.ico"></img> Movie App</h2></NavbarBrand>
-          <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
-          <Collapse isOpen={!this.state.collapsed} navbar>
-            <Nav navbar>
-              <NavItem>
-                <NavLink href="https://academy.nomadcoders.co/courses/category/KR">Nomad Coders</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="https://github.com/MATA0406/server_side_react">GitHub</NavLink>
-              </NavItem>
-            </Nav>
-          </Collapse>
-        </Navbar>
-        <Jumbotron>
-          <div className={movies ? "App" : "App--loading"}>
-            {this.state.movies ? this._renderMovies() : <h1>Loading... </h1>}<Spinner color="danger" />
+        <Col md={{ size: '10', offset: '1'}}>
+          <div>
+          <Navbar color="faded" light>
+            <NavbarBrand href="https://mata0406.github.io/server_side_react/" className="mr-auto"><h2><img src="./favicon.ico"></img> Movie App</h2></NavbarBrand>
+            <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
+            <Collapse isOpen={!this.state.collapsed} navbar>
+              <Nav navbar className="header_nav_div">
+                <NavItem>
+                  <NavLink href="https://academy.nomadcoders.co/courses/category/KR">Nomad Coders</NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink href="https://github.com/MATA0406/server_side_react">GitHub</NavLink>
+                </NavItem>
+              </Nav>
+            </Collapse>
+          </Navbar>
           </div>
-        </Jumbotron>
+          <Jumbotron>
+            <div className={movies ? "App" : "App--loading"}>
+              {this.state.movies ? this._renderMovies() : <div><h1>Loading</h1><Spinner color="danger" /></div>}
+            </div>
+          </Jumbotron>
+        </Col>
       </div>
     )
   }
